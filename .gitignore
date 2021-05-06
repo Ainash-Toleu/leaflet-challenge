@@ -1,6 +1,8 @@
 # for mac
 .DS_Store
 
+# ignore config documnet
+config.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
