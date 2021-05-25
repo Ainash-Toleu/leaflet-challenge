@@ -35,7 +35,8 @@ d3.json(url).then(function(data) {
     var lng = data.features[i].geometry.coordinates[0];
     title = data.features[i].properties.title;
     console.log(i, lat, lng, title);
-    L.circle([lat, lng]).addTo(myMap);
+    var circle = L.circle([lat, lng]).addTo(myMap);
+    circle.bindPopup(title);
     // var marker = L.marker([lat, lng]).addTo(myMap);
     // marker.bindPopup(title);
   };
