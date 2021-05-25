@@ -29,15 +29,16 @@ d3.json(url).then(function(data) {
     id: "mapbox/streets-v11",
     accessToken: API_KEY
   }).addTo(myMap);
-  // Create a new marker
-  // Pass in some initial options, and then add it to the map using the addTo method
-  var marker = L.marker([data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]], {
-    draggable: true,
-    title: "Earthquake"
-  }).addTo(myMap);
 
-  // Binding a pop-up to our marker
-  marker.bindPopup(data.features[0].properties.title);
+  for (var i = 0; i < data.features.length; i++) {
+    var lat = data.features[i].geometry.coordinates[1];
+    var lng = data.features[i].geometry.coordinates[0];
+    title = data.features[i].properties.title;
+    console.log(i, lat, lng, title);
+    var marker = L.marker([lat, lng]).addTo(myMap);
+    marker.bindPopup(title);
+  };
+  
 
 });
 
