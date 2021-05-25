@@ -33,14 +33,14 @@ d3.json(url).then(function(data) {
   for (var i = 0; i < data.features.length; i++) {
     var lat = data.features[i].geometry.coordinates[1];
     var lng = data.features[i].geometry.coordinates[0];
-    title = data.features[i].properties.title;
-    console.log(i, lat, lng, title);
+    var depth = data.features[i].geometry.coordinates[2];
+    var title = data.features[i].properties.title;
+    console.log(i, lat, lng, depth, title);
     var circle = L.circle([lat, lng]).addTo(myMap);
     circle.bindPopup(title);
     // var marker = L.marker([lat, lng]).addTo(myMap);
     // marker.bindPopup(title);
   };
-  
 
 });
 
