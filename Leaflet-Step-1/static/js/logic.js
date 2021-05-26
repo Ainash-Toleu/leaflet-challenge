@@ -1,4 +1,12 @@
-
+function getColor(d) {
+  return d > 90 ? '#800026' :
+         d > 70  ? '#BD0026' :
+         d > 50  ? '#E31A1C' :
+         d > 30  ? '#FC4E2A' :
+         d > 10   ? '#FD8D3C' :
+         d > -10   ? '#FEB24C' :  
+                    '#FFEDA0';
+}
 
 url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 // Perform a GET request to the query URL
@@ -16,7 +24,7 @@ d3.json(url).then(function(data) {
   // This gets inserted into the div with an id of 'map'
   var myMap = L.map("map", {
     center: [35.926, -117.7115],
-   zoom: 13
+    zoom: 13
   });
 
   // Adding a tile layer (the background map image) to our map
@@ -26,7 +34,7 @@ d3.json(url).then(function(data) {
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/streets-v11",
+    id: 'mapbox/light-v9',
     accessToken: API_KEY
   }).addTo(myMap);
 
@@ -42,6 +50,27 @@ d3.json(url).then(function(data) {
     // marker.bindPopup(title);
   };
 
+  
+  var legend = L.control({position: 'bottomright'});  
+    legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+      grades = [-10, 10, 30, 50, 70, 90],
+      labels=[];
+
+      for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+    
+      return div;
+    };
+    legend.addTo(map);
+
+  
+
+  
 });
 
 
