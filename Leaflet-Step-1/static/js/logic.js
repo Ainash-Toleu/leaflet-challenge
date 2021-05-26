@@ -1,10 +1,10 @@
 function getColor(d) {
   return d > 90 ? '#800026' :
          d > 70  ? '#BD0026' :
-         d > 50  ? '#E31A1C' :
-         d > 30  ? '#FC4E2A' :
-         d > 10   ? '#FD8D3C' :
-         d > -10   ? '#FEB24C' :  
+         d > 50  ? '#feb24c' :
+         d > 30  ? '#ffeda0' :
+         d > 10   ? '#f7fcb9' :
+         d > -10   ? '#addd8e' :  
                     '#FFEDA0';
 }
 
@@ -43,8 +43,15 @@ d3.json(url).then(function(data) {
     var lng = data.features[i].geometry.coordinates[0];
     var depth = data.features[i].geometry.coordinates[2];
     var title = data.features[i].properties.title;
-    console.log(i, lat, lng, depth, title);
-    var circle = L.circle([lat, lng]).addTo(myMap);
+    var mag = data.features[i].properties.mag;
+    console.log(i, lat, lng, depth, title, mag);
+    // var circle = L.circle([lat, lng]).addTo(myMap);
+    var circle = L.circle([lat, lng], {
+      color: getColor(depth),
+      fillColor: getColor(depth),
+      fillOpacity: 0.5,
+      weight: mag*10,
+      radius: 500}).addTo(myMap);
     circle.bindPopup(title);
     // var marker = L.marker([lat, lng]).addTo(myMap);
     // marker.bindPopup(title);
