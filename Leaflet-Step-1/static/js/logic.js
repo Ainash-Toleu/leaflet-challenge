@@ -44,7 +44,7 @@ d3.json(url).then(function(data) {
     var title = data.features[i].properties.title;
     var mag = data.features[i].properties.mag;
     console.log(i, lat, lng, depth, title, mag);
-    // var circle = L.circle([lat, lng]).addTo(myMap);
+   
     var circle = L.circle([lat, lng], {
       color: 'black',
       fillColor: getColor(depth),
@@ -53,8 +53,7 @@ d3.json(url).then(function(data) {
       weight: 0.5,
       radius: mag*20000}).addTo(myMap);
     circle.bindPopup(title);
-    // var marker = L.marker([lat, lng]).addTo(myMap);
-    // marker.bindPopup(title);
+  
   };
 
   var legend = L.control({position: 'bottomright'});
@@ -73,22 +72,7 @@ d3.json(url).then(function(data) {
   }
 
   legend.addTo(myMap);
-  // var legend = L.control({position: 'bottomright'});  
-  //   legend.onAdd = function (map) {
-
-  //     var div = L.DomUtil.create('div', 'info legend'),
-  //     grades = [-10, 10, 30, 50, 70, 90],
-  //     labels=[];
-
-  //     for (var i = 0; i < grades.length; i++) {
-  //       div.innerHTML +=
-  //           '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-  //           grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-  //     }
-    
-  //     return div;
-  //   };
-  //   legend.addTo(map);
+  
 
   
 
