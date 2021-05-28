@@ -1,3 +1,4 @@
+// function to set the colors of markers
 function getColor(d) {
   return d > 90 ? '#800026' :
          d > 70  ? '#BD0026' :
@@ -7,27 +8,24 @@ function getColor(d) {
                     '#f7fcb9';
 }
 
+// url to earthquake data
 url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+
 // Perform a GET request to the query URL
 d3.json(url).then(function(data) {
-  // Once we get a response, send the data.features object to the createFeatures function
+  // print the data in console
   console.log(data);
-  console.log(data.features);
-  console.log(data.features[0].geometry);
-  console.log(data.features[0].geometry.coordinates);
-  console.log(data.features[0].geometry.coordinates[0]);
-  console.log(data.features[0].geometry.coordinates[1]);
-
+ 
   // Creating our initial map object
   // We set the longitude, latitude, and the starting zoom level
   // This gets inserted into the div with an id of 'map'
   var myMap = L.map("map", {
     center: [35.926, -117.7115],
-    zoom: 13
+    zoom: 5
   });
 
-  // Adding a tile layer (the background map image) to our map
-  // We use the addTo method to add objects to our map
+  // Adding a tile layer to our map
+  //used the addTo method to add objects to our map
   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
@@ -37,14 +35,18 @@ d3.json(url).then(function(data) {
     accessToken: API_KEY
   }).addTo(myMap);
 
+// loop through all data to get data that we need
   for (var i = 0; i < data.features.length; i++) {
     var lat = data.features[i].geometry.coordinates[1];
     var lng = data.features[i].geometry.coordinates[0];
     var depth = data.features[i].geometry.coordinates[2];
     var title = data.features[i].properties.title;
     var mag = data.features[i].properties.mag;
+
+    // print the data in console
     console.log(i, lat, lng, depth, title, mag);
    
+    // add circles for the markers to the map
     var circle = L.circle([lat, lng], {
       color: 'black',
       fillColor: getColor(depth),
@@ -52,13 +54,13 @@ d3.json(url).then(function(data) {
       fillOpacity: 1,
       weight: 0.5,
       radius: mag*20000}).addTo(myMap);
+      //add popup information to the markers 
     circle.bindPopup(title);
   
   };
 
+  // create legend
   var legend = L.control({position: 'bottomright'});
-
-
   legend.onAdd = function (myMap) {
     var legendDiv =  L.DomUtil.create('div', 'info legend'),
     grades = [-10, 10, 30, 50, 70, 90],
@@ -72,11 +74,7 @@ d3.json(url).then(function(data) {
   }
 
   legend.addTo(myMap);
-  
-
-  
-
-  
+   
 });
 
 
