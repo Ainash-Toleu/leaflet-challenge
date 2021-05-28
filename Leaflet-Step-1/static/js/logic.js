@@ -2,10 +2,9 @@ function getColor(d) {
   return d > 90 ? '#800026' :
          d > 70  ? '#BD0026' :
          d > 50  ? '#feb24c' :
-         d > 30  ? '#ffeda0' :
-         d > 10   ? '#f7fcb9' :
-         d > -10   ? '#addd8e' :  
-                    '636363';
+         d > 30  ? '#fbd5a1' :
+         d > 10   ? '#ffeda0' : 
+                    '#f7fcb9';
 }
 
 url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
